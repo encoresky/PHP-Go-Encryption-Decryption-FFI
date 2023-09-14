@@ -1,15 +1,15 @@
 # Cross-Language Data Encryption: PHP and Golang with PHP FFI
-Today’s interconnect world, data security is most important paramount. Whether you are developing  web application or backend service, encrypting sensitive information before transmiting or storing is comman practice and general requirement.
+In today's interconnected world, data security is of paramount importance. Whether you are developing a web application or a backend service, encrypting sensitive information before transmitting or storing it is a common practice and a general requirement.
 
-In this tutorial I’ll explore a unique approch to encrypt and decrypt data with two different technologies like PHP and Golang using PHP FFI(Forign Function Interface)function, this combinaion of language allows you to achieve a robust encryption and decryption process while leveraging the strengths of both PHP and Golang.
+In this tutorial, I’ll explore a unique approach to encrypting and decrypting data using two different technologies: PHP and Golang. By utilizing the PHP FFI (Foreign Function Interface) function, this combination of languages allows you to achieve robust encryption and decryption processes while leveraging the strengths of both PHP and Golang.
 
 ## Prerequisites: ##
-Before we begin make sure you have following tools installed in your systems.
+Before we begin, make sure you have the following tools installed on your system.
 - PHP(enabled FFI)
 - Golang (latest version)
 
 ## Step 1: Setting up PHP Encryption ##
-Let's start by implementing the encryption part in PHP using OpenSSL. Here's the PHP code to encrypt a string
+Let's begin by implementing encryption in PHP using OpenSSL. Here's the PHP code to encrypt a string:
 ```PHP
     function encryptString($plainText, $key) {
         $ivSize = openssl_cipher_iv_length('aes-256-cbc');
@@ -21,8 +21,7 @@ Let's start by implementing the encryption part in PHP using OpenSSL. Here's the
         return base64_encode($iv . $cipherText);
     }
 ```
-This function takes two arguments: the message to encrypt and a key. It uses AES-256-CBC encryption with a randomly generated key and initialization vector (IV) for data encryption.
-
+This function takes two arguments: the message to encrypt and a key. It uses AES-256-CBC encryption with a randomly generated initialization vector (IV) for data encryption.
 
 You can use this function as follows:
 ```PHP
@@ -81,9 +80,9 @@ In this code, we define a C function prototype and specify the shared library's 
         GoString DecryptString(GoString encryptedBase64, GoString key);
         ", __DIR__ . "/decrypt.so");
 ```
-- We use FFI::cdef() to define a C function prototype that we want to call from the shared library. In this case, it's GoString DecryptString(GoString encryptedBase64, GoString key);.
-- We specify the name of the shared library, such as " __DIR__ . "/decrypt.so" on Linux. Make sure the library is located in a directory that PHP can access.
-- We defined GoString data type to interchange information in different languages.
+- We use FFI::cdef() method to define the prototype of a C function that we want to call from the shared library. In this case, it's GoString DecryptString(GoString encryptedBase64, GoString key);.
+- We specify the name of the shared library: for example, "DIR . "/decrypt.so" on Linux. Ensure the library is located in a directory that PHP can access.
+- We define GoString data type to interchange information in different languages.
 
 
 We also create a helper function `stringToGoString` to convert a PHP string into a format suitable for Go:
@@ -101,7 +100,7 @@ We also create a helper function `stringToGoString` to convert a PHP string into
     }
 ```
 - The main purpose of `stringToGoString` function is to convert a PHP string into a format that can be used as a Go string
-- `FFI::new('char[' . count($strChar) . ']', false)` creates a new FFI char array with a size equal to the number of characters in the PHP string. This array will hold the individual characters of the string.
+- The expression `FFI::new('char[' . count($strChar) . ']', false)` creates a new FFI char array. Its size is determined by the number of characters in the PHP string, and this array will store each individual character of the string.
 
 
 Finally, we call the Golang Decrypt function using PHP FFI:
@@ -122,8 +121,7 @@ Finally, we call the Golang Decrypt function using PHP FFI:
 - You should see the decrypted data printed to the console.
 
 ## Conclusion ##
-we explored a unique approach to data encryption and decryption by bridging the gap between two powerful programming languages: PHP and Golang, using the PHP FFI (Foreign Function Interface) function. By leveraging the strengths of both languages, we achieved a robust and secure data encryption and decryption process.
-
+In this exploration, we took a unique approach to data encryption and decryption, bridging the gap between two powerful programming languages: PHP and Golang. Using the PHP FFI (Foreign Function Interface) function allowed us to leverage the strengths of both languages, resulting in a robust and secure encryption and decryption process.
 
 
 
